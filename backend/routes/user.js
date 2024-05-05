@@ -9,15 +9,15 @@ const { authMiddleware } = require('../middleware');
 
 
 const signupBody = zod.object({
-    username: zod.string().email,
+    username: zod.string().email(),
     password: zod.string(),
     firstName: zod.string(),
-    lastName: zod.string() 
+    lastName: zod.string(),
 })
 
 router.post('/signup', async (req, res) => {
 
-    const success = signupBody.safeParsearse(req.body);
+    const success = signupBody.safeParse(req.body);
     if(!success) {
         res.status(411).json({
             msg: "Email already taken / Incorrect inputs"
@@ -32,6 +32,7 @@ router.post('/signup', async (req, res) => {
         res.status(411).json({
             msg: "user with this email already exists"
         })
+        return;
     }
 
     const user = await User.create({
@@ -48,7 +49,7 @@ router.post('/signup', async (req, res) => {
         balance: 1 + Math.random() * 1000
     })
 
-    const token = jwt.sign({ userId, JWT_SECRET });
+    const token = jwt.sign({ userId }, JWT_SECRET );
 
     res.json({
         msg: "User successfully created",
@@ -78,7 +79,7 @@ router.post('/signin', async (req, res) => {
     const userId = user._id;
 
     if(user) {
-        const token = jwt.sign({ userId, JWT_SECRET });
+        const token = jwt.sign({ userId }, JWT_SECRET);
         res.send({
             token: token
         })
