@@ -1,12 +1,11 @@
 const express = require('express');
+
 const router = express.Router();
 const zod = require('zod');
 const jwt = require('jsonwebtoken');
-
-import { User } from '../db';
-import { JWT_SECRET } from '../config';
-import { authMiddleware } from '../middleware';
-import { Account } from '../db';
+const { User, Account } = require("../db");
+const { JWT_SECRET } = require('../config')
+const { authMiddleware } = require('../middleware');
 
 
 const signupBody = zod.object({
@@ -18,14 +17,14 @@ const signupBody = zod.object({
 
 router.post('/signup', async (req, res) => {
 
-    const { success } = signupBody.safeParse(req.body);
+    const success = signupBody.safeParsearse(req.body);
     if(!success) {
         res.status(411).json({
             msg: "Email already taken / Incorrect inputs"
         })
     }
 
-    const existingUser = User.findOne({
+    const existingUser = await User.findOne({
         username: req.body.username
     })
 
@@ -83,6 +82,7 @@ router.post('/signin', async (req, res) => {
         res.send({
             token: token
         })
+        return;
     }
 
     res.json({
@@ -104,7 +104,9 @@ router.put('/', authMiddleware, async (req, res) => {
         })
     }
 
-    await User.updateOne({ _id: req.userId }, req.body);
+    await User.updateOne(req.body, {
+        id: req.userId 
+    });
 
     res.json({
         msg: 'updated successfully'
@@ -115,4 +117,4 @@ router.put('/', authMiddleware, async (req, res) => {
 
 
 
-module.exports = { router }
+module.exports = router;

@@ -1,11 +1,10 @@
 const express = require('express');
-const app = express();
+const userRouter = require("./user");
+const accountRouter = require("./account");
 
-// main router (named as rootRouter in BE index.js)
 const router = express.Router();
 
-// importing userRouter and giving it a default route /user to direct all user requests
-const userRouter = require('/user')
-router.use('/user', userRouter);
+router.use("/user", userRouter);
+router.use("/account", accountRouter);
 
-module.exports = { router };
+module.exports = router;
