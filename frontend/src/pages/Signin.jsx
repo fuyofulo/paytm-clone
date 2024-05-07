@@ -6,7 +6,7 @@ import SubTitle from "../components/SubTitle";
 import Title from "../components/Title";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+ 
 
 const Signin = () => {
 
@@ -29,6 +29,7 @@ const Signin = () => {
                             password,
                         });
                         localStorage.setItem("token", response.data.token);
+                        localStorage.setItem("username", username);
                         navigate("/dashboard");
                     }} content={"Sign In"}/>
                 </div>
@@ -38,4 +39,4 @@ const Signin = () => {
     </div>
 }
 
-export default Signin;
+export default Signin; 

@@ -10,7 +10,7 @@ router.post('/balance', authMiddleware, async (req, res) => {
         userId: req.userId
     });
 
-    res.json({
+    res.status(200).json({
         balance: account.balance
     })
 })
