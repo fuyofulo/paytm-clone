@@ -9,7 +9,7 @@ const Dashboard = () => {
     const [ balance, setBalance ] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/v1/account/balance', {
+        fetch('http://34.121.83.17:3000/api/v1/account/balance', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -38,7 +38,7 @@ const Send = () => {
                 <input onChange={(e) => { setAmount(e.target.value)}} type="number" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" id="amount" placeholder="Enter amount"/>
               </div>
               <button
-                onClick={() => { axios.post("http://localhost:3000/api/v1/account/transfer",{ to: id, amount},{
+                onClick={() => { axios.post("http://34.121.83.17:3000/api/v1/account/transfer",{ to: id, amount},{
                       headers: {Authorization:"Bearer " + localStorage.getItem("token")}})
                     navigate('/dashboard')
                     }}

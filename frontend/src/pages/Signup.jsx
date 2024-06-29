@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
+
 const Signup = () => {
 
     const [firstName, setfirstName] = useState("");
@@ -27,7 +29,7 @@ const Signup = () => {
                     <InputBox onChange={(e) => { setPassword(e.target.value) }} label={"Password"} placeholder='123456'/>
                     <div className="pt-4">
                         <Button onClick={ async () => {
-                            const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+                            const response = await axios.post("http://34.121.83.17:3000/api/v1/user/signup", {
                                 username,
                                 firstName,
                                 lastName,
